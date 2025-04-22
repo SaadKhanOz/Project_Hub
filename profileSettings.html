@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Settings - Project Management System</title>
+    <link rel="stylesheet" href="assets/css/profileSettings.css">
+</head>
+<body>
+    <div class="settings-container">
+        <div class="settings-header">
+            <h1>Profile Settings</h1>
+            <button onclick="history.back()" class="back-button">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="#42526E">
+                    <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+                </svg>
+                Back
+            </button>
+        </div>
+        <div class="settings-content">
+            <div class="profile-section">
+                <div class="avatar-section">
+                    <div class="avatar" id="userAvatar"></div>
+                    <button class="change-avatar-btn">Change avatar</button>
+                </div>
+                <form class="profile-form">
+                    <div class="form-group">
+                        <label for="fullName">Full Name</label>
+                        <input type="text" id="fullName" name="fullName" value="Saad Khan">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" value="saad.khan@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="jobTitle">Job Title</label>
+                        <input type="text" id="jobTitle" name="jobTitle" placeholder="Enter your job title">
+                    </div>
+                    <div class="form-group">
+                        <label for="department">Department</label>
+                        <input type="text" id="department" name="department" placeholder="Enter your department">
+                    </div>
+                    <div class="form-group">
+                        <label for="location">Location</label>
+                        <input type="text" id="location" name="location" placeholder="Enter your location">
+                    </div>
+                    <div class="button-group">
+                        <button type="submit" class="save-button">Save changes</button>
+                        <button type="button" class="cancel-button" onclick="history.back()">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="assets/js/profileSettings.js"></script>
+</body>
+</html>

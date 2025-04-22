@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - Project Management System</title>
+    <link rel="stylesheet" href="assets/css/profile.css">
+</head>
+<body>
+    <div class="profile-container">
+        <div class="profile-header">
+            <div class="avatar-section">
+                <div class="avatar" id="userAvatar">
+                    <span>SK</span>
+                </div>
+                <button class="change-avatar-btn">Change Avatar</button>
+            </div>
+            
+            <div class="profile-info">
+                <h1>Profile Settings</h1>
+                <p class="subtitle">Manage your account settings and preferences</p>
+            </div>
+        </div>
+
+        <div class="profile-content">
+            <form id="profileForm" class="profile-form">
+                <div class="form-section">
+                    <h2>Personal Information</h2>
+                    
+                    <div class="form-group">
+                        <label for="fullName">Full Name</label>
+                        <input type="text" id="fullName" name="fullName" value="Saad Khan" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" value="saad@example.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="role">Role</label>
+                        <input type="text" id="role" name="role" value="Project Manager" readonly>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2>Change Password</h2>
+                    
+                    <div class="form-group">
+                        <label for="currentPassword">Current Password</label>
+                        <div class="password-input">
+                            <input type="password" id="currentPassword" name="currentPassword">
+                            <button type="button" class="toggle-password" onclick="toggleCurrentPassword()">
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                    <path d="M10 4C4.5 4 2 10 2 10C2 10 4.5 16 10 16C15.5 16 18 10 18 10C18 10 15.5 4 10 4Z" stroke="currentColor" stroke-width="1.5"/>
+                                    <circle cx="10" cy="10" r="3" stroke="currentColor" stroke-width="1.5"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="newPassword">New Password</label>
+                        <div class="password-input">
+                            <input type="password" id="newPassword" name="newPassword">
+                            <button type="button" class="toggle-password" onclick="toggleNewPassword()">
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                    <path d="M10 4C4.5 4 2 10 2 10C2 10 4.5 16 10 16C15.5 16 18 10 18 10C18 10 15.5 4 10 4Z" stroke="currentColor" stroke-width="1.5"/>
+                                    <circle cx="10" cy="10" r="3" stroke="currentColor" stroke-width="1.5"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirmNewPassword">Confirm New Password</label>
+                        <div class="password-input">
+                            <input type="password" id="confirmNewPassword" name="confirmNewPassword">
+                            <button type="button" class="toggle-password" onclick="toggleConfirmNewPassword()">
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                    <path d="M10 4C4.5 4 2 10 2 10C2 10 4.5 16 10 16C15.5 16 18 10 18 10C18 10 15.5 4 10 4Z" stroke="currentColor" stroke-width="1.5"/>
+                                    <circle cx="10" cy="10" r="3" stroke="currentColor" stroke-width="1.5"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2>Preferences</h2>
+                    
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="emailNotifications" name="emailNotifications" checked>
+                            <span>Email Notifications</span>
+                        </label>
+                        <p class="help-text">Receive email notifications about your projects</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="taskReminders" name="taskReminders" checked>
+                            <span>Task Reminders</span>
+                        </label>
+                        <p class="help-text">Get reminders about upcoming and overdue tasks</p>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="cancel-btn" onclick="window.history.back()">Cancel</button>
+                    <button type="submit" class="save-btn">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="assets/js/profile.js"></script>
+</body>
+</html> 

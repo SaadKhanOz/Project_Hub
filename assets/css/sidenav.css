@@ -1,0 +1,106 @@
+.side-nav {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 240px;
+    background-color: #FAFBFC;
+    border-right: 1px solid #DFE1E6;
+    padding-top: 16px;
+    overflow-y: auto;
+}
+
+.side-nav .logo {
+    padding: 0 16px;
+    margin-bottom: 24px;
+}
+
+.side-nav .nav-items {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.side-nav .nav-item {
+    display: flex;
+    align-items: center;
+    padding: 8px 16px;
+    color: #42526E;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.side-nav .nav-item:hover {
+    background-color: #EBECF0;
+}
+
+.side-nav .nav-item.active {
+    background-color: #DEEBFF;
+    color: #0052CC;
+}
+
+.side-nav .nav-item svg {
+    margin-right: 12px;
+    width: 20px;
+    height: 20px;
+}
+
+.side-nav .dropdown {
+    width: 100%;
+}
+
+.side-nav .dropdown-content {
+    position: static;
+    display: none;
+    box-shadow: none;
+    background: transparent;
+    padding-left: 32px;
+}
+
+.side-nav .dropdown.active .dropdown-content {
+    display: block;
+}
+
+.side-nav .dropdown-content a {
+    padding: 8px 16px;
+    color: #42526E;
+    font-size: 14px;
+}
+
+.side-nav .dropdown-content a:hover {
+    background-color: #EBECF0;
+}
+
+/* Main content adjustment when side nav is present */
+.with-side-nav {
+    margin-left: 240px;
+    padding: 16px;
+}
+
+/* Top navigation adjustments */
+.top-nav.with-side-nav {
+    margin-left: 240px;
+    border-bottom: 1px solid #DFE1E6;
+    box-shadow: none;
+}
+
+/* For mobile responsiveness */
+@media (max-width: 768px) {
+    .side-nav {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+    }
+
+    .side-nav.active {
+        transform: translateX(0);
+    }
+
+    .with-side-nav {
+        margin-left: 0;
+    }
+
+    .top-nav.with-side-nav {
+        margin-left: 0;
+    }
+} 

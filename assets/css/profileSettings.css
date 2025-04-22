@@ -1,0 +1,156 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}
+
+body {
+    background-color: #f4f5f7;
+    color: #172B4D;
+}
+
+.settings-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.settings-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.settings-header h1 {
+    font-size: 24px;
+    font-weight: 500;
+}
+
+.back-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: none;
+    border: none;
+    color: #42526E;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 3px;
+}
+
+.back-button:hover {
+    background-color: #EBECF0;
+}
+
+.settings-content {
+    background-color: white;
+    border-radius: 3px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    padding: 24px;
+}
+
+.profile-section {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.avatar-section {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.avatar {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    background-color: #0052CC;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    font-weight: 500;
+}
+
+.change-avatar-btn {
+    background-color: #EBECF0;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 3px;
+    color: #42526E;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.change-avatar-btn:hover {
+    background-color: #DFE1E6;
+}
+
+.profile-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.form-group label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #42526E;
+}
+
+.form-group input {
+    padding: 8px 12px;
+    border: 2px solid #DFE1E6;
+    border-radius: 3px;
+    font-size: 14px;
+    transition: border-color 0.2s;
+}
+
+.form-group input:focus {
+    border-color: #4C9AFF;
+    outline: none;
+}
+
+.button-group {
+    display: flex;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.save-button {
+    background-color: #0052CC;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.save-button:hover {
+    background-color: #0047B3;
+}
+
+.cancel-button {
+    background-color: #EBECF0;
+    color: #42526E;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.cancel-button:hover {
+    background-color: #DFE1E6;
+} 

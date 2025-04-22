@@ -1,0 +1,366 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}
+
+body {
+    background-color: #f4f5f7;
+}
+
+.top-nav {
+    background-color: #ffffff;
+    padding: 8px 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo img {
+    width: 30px;
+    height: 30px;
+}
+
+.menu-button {
+    background: none;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+}
+
+.nav-items {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.nav-item {
+    padding: 8px 12px;
+    text-decoration: none;
+    color: #42526E;
+    font-weight: 500;
+    font-size: 14px;
+    border-radius: 3px;
+    position: relative;
+}
+
+.nav-item:hover {
+    background-color: #f4f5f7;
+}
+
+/* Dropdown styles */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #ffffff;
+    min-width: 180px;
+    box-shadow: 0 3px 5px rgba(0,0,0,0.2);
+    border-radius: 3px;
+    z-index: 1;
+    top: 100%;
+    left: 0;
+    margin-top: 4px;
+}
+
+.dropdown-content a {
+    color: #42526E;
+    padding: 10px 16px;
+    text-decoration: none;
+    display: block;
+    font-size: 14px;
+}
+
+.dropdown-content a:hover {
+    background-color: #f4f5f7;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown .nav-item::after {
+    content: "▼";
+    font-size: 10px;
+    margin-left: 5px;
+}
+
+.create-button {
+    margin-left: auto;
+    background-color: #0052cc;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.create-button:hover {
+    background-color: #0047b3;
+}
+
+.welcome-message {
+    text-align: center;
+    margin-top: 100px;
+    color: #42526E;
+}
+
+.welcome-message h1 {
+    font-size: 24px;
+    margin-bottom: 16px;
+}
+
+.welcome-message p {
+    font-size: 16px;
+    color: #5e6c84;
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.user-profile {
+    position: relative;
+    cursor: pointer;
+}
+
+.avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: #0052CC;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+}
+
+.profile-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 240px;
+    background: white;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 8px;
+    display: none;
+    z-index: 1000;
+}
+
+.profile-menu.active {
+    display: block;
+}
+
+.profile-header {
+    padding: 16px;
+    border-bottom: 1px solid #E8E8E8;
+}
+
+.profile-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+#userName {
+    font-weight: 500;
+    color: #172B4D;
+}
+
+#userEmail {
+    font-size: 0.875rem;
+    color: #6B778C;
+}
+
+.profile-links {
+    padding: 8px 0;
+}
+
+.profile-link {
+    display: block;
+    padding: 8px 16px;
+    color: #172B4D;
+    text-decoration: none;
+    transition: background-color 0.2s;
+}
+
+.profile-link:hover {
+    background-color: #F4F5F7;
+}
+
+.profile-link.logout {
+    color: #DE350B;
+}
+
+/* For You Section */
+.for-you-section {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.for-you-section h2 {
+    font-size: 24px;
+    font-weight: 500;
+    color: #172B4D;
+    margin-bottom: 24px;
+}
+
+/* Recent Projects */
+.recent-projects {
+    margin-top: 24px;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.section-header h3 {
+    font-size: 16px;
+    font-weight: 500;
+    color: #172B4D;
+}
+
+.view-all {
+    color: #0052CC;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.view-all:hover {
+    text-decoration: underline;
+}
+
+.project-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 24px;
+}
+
+.project-card {
+    background-color: white;
+    border: 1px solid #DFE1E6;
+    border-radius: 3px;
+    padding: 16px;
+    display: flex;
+    gap: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.project-card:hover {
+    background-color: #F4F5F7;
+}
+
+.project-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.project-icon.beta {
+    background-color: #FF8B00;
+}
+
+.project-icon.alpha {
+    background-color: #36B37E;
+}
+
+.project-icon.scrum {
+    background-color: #0052CC;
+}
+
+.project-icon svg {
+    fill: white;
+}
+
+.project-info {
+    flex: 1;
+}
+
+.project-header h4 {
+    font-size: 14px;
+    font-weight: 500;
+    color: #172B4D;
+    margin-bottom: 4px;
+}
+
+.project-type {
+    font-size: 12px;
+    color: #6B778C;
+}
+
+.quick-links {
+    margin-top: 16px;
+}
+
+.quick-links h5 {
+    font-size: 11px;
+    text-transform: uppercase;
+    color: #6B778C;
+    margin-bottom: 8px;
+}
+
+.quick-links a {
+    display: block;
+    color: #0052CC;
+    text-decoration: none;
+    font-size: 14px;
+    margin-bottom: 4px;
+}
+
+.quick-links a:hover {
+    text-decoration: underline;
+}
+
+.work-items {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.count {
+    background-color: #DFE1E6;
+    color: #42526E;
+    padding: 0 6px;
+    border-radius: 3px;
+    font-size: 12px;
+}
+
+.board-info {
+    margin-top: 16px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: #6B778C;
+    font-size: 12px;
+}
+
+.board-info svg {
+    width: 16px;
+    height: 16px;
+} 

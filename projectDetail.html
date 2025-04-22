@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Project Details</title>
+    <link rel="stylesheet" href="assets/css/projectDetail.css">
+</head>
+<body>
+    <div class="project-details-container">
+        <div class="header">
+            <h1>Add project details</h1>
+            <p class="subtitle">Explore what's possible when you collaborate with your team. Edit project details anytime in project settings.</p>
+        </div>
+
+        <form class="project-form">
+            <div class="form-section">
+                <div class="template-section">
+                    <label>Template</label>
+                    <div class="template-card">
+                        <div class="template-icon">
+                            <img src="assets/images/kanban.png" alt="Kanban">
+                        </div>
+                        <div class="template-info">
+                            <div class="template-title">
+                                <span>Kanban</span>
+                                <span class="jira-label">Jira</span>
+                            </div>
+                            <p class="template-description">Visualize and advance your project forward using issues on a powerful board.</p>
+                        </div>
+                        <button type="button" class="change-button">Change template</button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="name">Name <span class="required">*</span></label>
+                    <input type="text" id="name" placeholder="Try a team name, project goal, milestone..." required>
+                </div>
+
+                <div class="form-group">
+                    <label for="key">Key <span class="required">*</span>
+                        <span class="info-icon" title="Project keys are unique identifiers used in URLs and commits">ⓘ</span>
+                    </label>
+                    <input type="text" id="key" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="access">Access <span class="required">*</span></label>
+                    <select id="access" required>
+                        <option value="" disabled selected>Choose an access level</option>
+                        <option value="private">Private</option>
+                        <option value="public">Public</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="button" class="cancel-button">Cancel</button>
+                <button type="button" class="create-button" onclick="window.location.href='invite.html'">Create project</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
