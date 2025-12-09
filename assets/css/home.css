@@ -7,6 +7,8 @@
 
 body {
     background-color: #f4f5f7;
+    min-height: 100vh;
+    position: relative;
 }
 
 .top-nav {
@@ -16,6 +18,12 @@ body {
     display: flex;
     align-items: center;
     gap: 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    height: 56px;
 }
 
 .logo {
@@ -114,7 +122,8 @@ body {
 
 .welcome-message {
     text-align: center;
-    margin-top: 100px;
+    padding-top: 120px;
+    margin-top: 0;
     color: #42526E;
 }
 
@@ -137,6 +146,10 @@ body {
 .user-profile {
     position: relative;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    z-index: 1000;
+    margin-left: 16px;
 }
 
 .avatar {
@@ -149,23 +162,48 @@ body {
     align-items: center;
     justify-content: center;
     font-weight: 500;
+    overflow: hidden;
+    cursor: pointer;
+    z-index: 1001;
+    user-select: none;
+}
+
+.avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .profile-menu {
     position: absolute;
-    top: 100%;
+    top: calc(100% + 8px);
     right: 0;
     width: 240px;
     background: white;
     border-radius: 4px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-top: 8px;
-    display: none;
-    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.2s ease;
+    z-index: 1002;
 }
 
 .profile-menu.active {
-    display: block;
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* Ensure menu stays visible when hovering between avatar and menu */
+.profile-menu::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    right: 0;
+    left: 0;
+    height: 8px;
+    background: transparent;
 }
 
 .profile-header {
@@ -199,6 +237,8 @@ body {
     color: #172B4D;
     text-decoration: none;
     transition: background-color 0.2s;
+    font-size: 14px;
+    cursor: pointer;
 }
 
 .profile-link:hover {

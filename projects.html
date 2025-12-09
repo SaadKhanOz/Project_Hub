@@ -3,41 +3,164 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Projects - Project Management System</title>
-    <link rel="stylesheet" href="assets/css/projects.css">
+    <title>All Projects - Project Management System</title>
+    <link rel="stylesheet" href="assets/css/home.css">
+    <style>
+        .projects-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px; /* Reduced padding since we removed the nav */
+        }
+
+        .projects-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .projects-header h1 {
+            font-size: 24px;
+            color: #172B4D;
+        }
+
+        .create-project-btn {
+            background-color: #0052cc;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        .create-project-btn:hover {
+            background-color: #0047b3;
+        }
+
+        .no-projects {
+            text-align: center;
+            padding: 40px;
+            background: white;
+            border-radius: 8px;
+            color: #42526E;
+        }
+
+        .project-created-date {
+            font-size: 12px;
+            color: #6B778C;
+            margin-top: 8px;
+        }
+
+        .project-description {
+            color: #6B778C;
+            font-size: 14px;
+            margin: 8px 0;
+        }
+
+        .project-card {
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .project-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+    </style>
 </head>
 <body>
-    <nav class="top-nav">
-        <!-- Include your standard navigation here -->
-    </nav>
-
     <div class="projects-container">
         <div class="projects-header">
-            <div class="header-left">
-                <h1>Projects</h1>
-                <div class="search-bar">
-                    <input type="text" placeholder="Search projects..." id="projectSearch">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="#42526E">
-                        <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
-                    </svg>
-                </div>
-            </div>
-            <div class="header-right">
-                <button class="filter-button">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="#42526E">
-                        <path d="M3 17v2h6v-2H3zM3 5v2h10V5H3zm10 16v-2h8v-2h-8v-2h-2v6h2zM7 9v2H3v2h4v2h2V9H7zm14 4v-2H11v2h10zm-6-4h2V7h4V5h-4V3h-2v6z"/>
-                    </svg>
-                    Filter
-                </button>
-                <a href="createProject.html" class="create-project-button">Create project</a>
-            </div>
+            <h1>All Projects</h1>
+            <a href="projectDetail.html" class="create-project-btn">Create Project</a>
         </div>
 
-        <div class="projects-grid" id="projectsGrid">
-            <!-- Project cards will be dynamically added here -->
+        <div class="project-cards" id="projectCards">
+            <!-- Projects will be loaded dynamically -->
         </div>
     </div>
 
-    <script src="assets/js/projects.js"></script>
+    <script>
+        // Function to format date
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric'
+            });
+        }
+
+        // Function to navigate to project board
+        function goToProjectBoard(projectId) {
+            window.location.href = `projectBoard.html?id=${projectId}`;
+        }
+
+        // Function to load all user's projects
+        function loadAllProjects() {
+            fetch('includes/get_all_projects.php')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const projectCards = document.getElementById('projectCards');
+                        projectCards.innerHTML = ''; // Clear existing cards
+                        
+                        if (data.projects.length === 0) {
+                            projectCards.innerHTML = `
+                                <div class="no-projects">
+                                    <h2>No projects yet</h2>
+                                    <p>Create your first project to get started!</p>
+                                </div>
+                            `;
+                            return;
+                        }
+
+                        data.projects.forEach(project => {
+                            const projectHtml = `
+                                <div class="project-card" onclick="goToProjectBoard(${project.id})">
+                                    <div class="project-icon ${getRandomProjectClass()}">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="#42526E">
+                                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
+                                        </svg>
+                                    </div>
+                                    <div class="project-info">
+                                        <div class="project-header">
+                                            <h4>${project.name}</h4>
+                                            <span class="project-type">Team-managed software</span>
+                                        </div>
+                                        <p class="project-description">${project.description || 'No description provided'}</p>
+                                        <div class="quick-links">
+                                            <h5>Quick links</h5>
+                                            <a href="#" class="work-items" onclick="event.stopPropagation()">My open work items <span class="count">0</span></a>
+                                            <a href="#" class="done-items" onclick="event.stopPropagation()">Done work items</a>
+                                        </div>
+                                        <div class="board-info">
+                                            <span>Created on ${formatDate(project.created_at)}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                            projectCards.innerHTML += projectHtml;
+                        });
+                    } else {
+                        console.error('Error loading projects:', data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+
+        // Function to get random project class for icon background
+        function getRandomProjectClass() {
+            const classes = ['beta', 'alpha', 'scrum'];
+            return classes[Math.floor(Math.random() * classes.length)];
+        }
+
+        // Load projects when page loads
+        document.addEventListener('DOMContentLoaded', loadAllProjects);
+    </script>
 </body>
 </html> 

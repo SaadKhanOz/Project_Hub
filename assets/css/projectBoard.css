@@ -115,61 +115,109 @@ body {
 
 .column-content {
     min-height: 200px;
-    padding: 4px;
+    padding: 12px;
+    background: #f5f5f5;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+}
+
+.column-content.drag-over {
+    background-color: #e0e0e0;
+    box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.1);
 }
 
 .task-card {
-    background-color: white;
-    border-radius: 3px;
+    background: white;
+    border-radius: 8px;
     padding: 12px;
-    margin-bottom: 8px;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    margin-bottom: 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     cursor: grab;
+    transition: all 0.2s ease;
 }
 
-.task-card:active {
-    cursor: grabbing;
+.task-card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
 }
 
-.task-card .task-title {
-    font-size: 14px;
-    font-weight: 500;
+.task-card.dragging {
+    opacity: 0.5;
+    transform: scale(0.95);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.task-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
     margin-bottom: 8px;
 }
 
-.task-card .task-meta {
+.task-header h4 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+}
+
+.task-description {
+    font-size: 14px;
+    color: #666;
+    margin: 8px 0;
+}
+
+.task-footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-top: 12px;
     font-size: 12px;
-    color: #6B778C;
+    color: #888;
 }
 
-.task-card .assignee {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-}
-
-.task-card .priority {
-    padding: 2px 6px;
-    border-radius: 3px;
+.priority {
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
     font-weight: 500;
 }
 
 .priority.high {
-    background-color: #FFEBE6;
-    color: #DE350B;
+    background-color: #ffebee;
+    color: #d32f2f;
 }
 
 .priority.medium {
-    background-color: #FFFAE6;
-    color: #FF991F;
+    background-color: #fff3e0;
+    color: #f57c00;
 }
 
 .priority.low {
-    background-color: #E3FCEF;
-    color: #36B37E;
+    background-color: #e8f5e9;
+    color: #388e3c;
+}
+
+.status-badge {
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.status-badge.to-do {
+    background-color: #e3f2fd;
+    color: #1976d2;
+}
+
+.status-badge.in-progress {
+    background-color: #fff3e0;
+    color: #f57c00;
+}
+
+.status-badge.done {
+    background-color: #e8f5e9;
+    color: #388e3c;
 }
 
 /* Modal styles */
@@ -454,4 +502,294 @@ body {
 
 .task-table .action-button:hover {
     background-color: #DFE1E6;
+}
+
+/* Style for tasks in Done column */
+#doneColumn .task-card .task-header h4,
+#doneColumn .task-card .task-description {
+    text-decoration: line-through;
+    color: #666;
+}
+
+#doneColumn .task-card {
+    opacity: 0.8;
+    background: #fafafa;
+}
+
+/* Also strike through completed tasks in the table view */
+.task-table tr[data-status="Done"] td:first-child,
+.task-table tr[data-status="Done"] td:nth-child(2) {
+    text-decoration: line-through;
+    color: #666;
+}
+
+/* Filter styles */
+.filter-select {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-right: 10px;
+    background-color: white;
+    font-size: 14px;
+}
+
+.filter-select:focus {
+    outline: none;
+    border-color: #4a90e2;
+    box-shadow: 0 0 3px rgba(74, 144, 226, 0.3);
+}
+
+input[placeholder="Search tasks..."] {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 200px;
+    font-size: 14px;
+}
+
+input[placeholder="Search tasks..."]:focus {
+    outline: none;
+    border-color: #4a90e2;
+    box-shadow: 0 0 3px rgba(74, 144, 226, 0.3);
+}
+
+/* Invite modal styles */
+.invites-list {
+    margin-top: 20px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.invite-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #DFE1E6;
+}
+
+.invite-item:last-child {
+    border-bottom: none;
+}
+
+.invite-email {
+    font-weight: 500;
+    color: #172B4D;
+}
+
+.invite-status {
+    color: #F39C12;
+    font-size: 12px;
+    padding: 4px 8px;
+    background-color: #FFF3E0;
+    border-radius: 3px;
+}
+
+.cancel-invite {
+    padding: 4px 8px;
+    background-color: #FFEBEE;
+    color: #D32F2F;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.cancel-invite:hover {
+    background-color: #FFCDD2;
+}
+
+.no-invites {
+    text-align: center;
+    color: #6B778C;
+    padding: 20px;
+    font-style: italic;
+}
+
+.invite-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+}
+
+.invite-date {
+    font-size: 12px;
+    color: #6B778C;
+}
+
+.error-message {
+    color: #D32F2F;
+    background-color: #FFEBEE;
+    padding: 12px;
+    border-radius: 4px;
+    margin: 8px 0;
+    text-align: center;
+}
+
+.retry-button {
+    margin-top: 8px;
+    padding: 6px 12px;
+    background-color: #fff;
+    border: 1px solid #D32F2F;
+    color: #D32F2F;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.retry-button:hover {
+    background-color: #FFEBEE;
+}
+
+/* Team Members button: use same style as .action-button */
+#teamMembersBtn.team-members-button {
+    background: #fff;
+    border: 1px solid #dfe1e6;
+    color: #42526E;
+    border-radius: 6px;
+    padding: 8px 16px;
+    font-size: 1rem;
+    margin-left: 8px;
+    cursor: pointer;
+    transition: background 0.2s, box-shadow 0.2s;
+    box-shadow: 0 1px 2px rgba(9,30,66,.04);
+}
+#teamMembersBtn.team-members-button:hover {
+    background: #f4f5f7;
+    box-shadow: 0 4px 8px rgba(9,30,66,.08);
+}
+
+/* Team Members Modal: match Add Task modal style */
+#teamMembersModal.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: auto;
+    background: rgba(9,30,66,0.15);
+}
+#teamMembersModal .modal-content {
+    background: #fff;
+    margin: 60px auto;
+    padding: 32px 32px 24px 32px;
+    border-radius: 12px;
+    max-width: 400px;
+    box-shadow: 0 8px 32px rgba(9,30,66,.16);
+    position: relative;
+    min-width: 320px;
+}
+#teamMembersModal .close-button {
+    position: absolute;
+    right: 18px;
+    top: 18px;
+    font-size: 1.5rem;
+    color: #42526E;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+#teamMembersModal h2 {
+    margin-top: 0;
+    margin-bottom: 18px;
+    font-size: 1.4rem;
+    color: #253858;
+    font-weight: 700;
+}
+#teamMembersList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+#teamMembersList li {
+    margin-bottom: 12px;
+    font-size: 1rem;
+    color: #42526E;
+    display: flex;
+    align-items: center;
+}
+#teamMembersList button {
+    margin-left: 10px;
+    padding: 2px 8px;
+    font-size: 0.95rem;
+    background: #ffebe6;
+    color: #de350b;
+    border: 1px solid #ffbdad;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+#teamMembersList button:hover {
+    background: #ffbdad;
+}
+
+/* Team Members Modal styles */
+.team-members-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.team-members-list li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px;
+    border-bottom: 1px solid #dfe1e6;
+}
+
+.team-members-list li:last-child {
+    border-bottom: none;
+}
+
+.team-members-list .member-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.team-members-list .member-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: #0052cc;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+}
+
+.team-members-list .member-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.team-members-list .member-name {
+    font-weight: 500;
+    color: #172b4d;
+}
+
+.team-members-list .member-email {
+    font-size: 12px;
+    color: #6b778c;
+}
+
+.team-members-list .remove-member {
+    background: none;
+    border: none;
+    color: #de350b;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 3px;
+    font-size: 12px;
+}
+
+.team-members-list .remove-member:hover {
+    background-color: #ffebe6;
 } 

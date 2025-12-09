@@ -1,44 +1,184 @@
-// Initialize profile functionality when DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-    initializeProfile();
-    const profileForm = document.getElementById('profileForm');
-    if (profileForm) {
-        profileForm.addEventListener('submit', handleProfileUpdate);
-    }
-});
+// Function to load user profile data
+function loadUserProfile() {
+    console.log('Loading user profile...');
+    fetch('includes/get_user_profile.php')
+        .then(response => {
+            console.log('Raw response:', response);
+            return response.json();
+        })
+        .then(data => {
+            console.log('Profile data received:', data);
+            if (data.success) {
+                updateProfilePictures(data.profile_picture, data.full_name);
+                
+                // Update form fields if they exist
+                const fullNameInput = document.getElementById('fullName');
+                const emailInput = document.getElementById('email');
+                if (fullNameInput) fullNameInput.value = data.full_name || '';
+                if (emailInput) emailInput.value = data.email || '';
 
-// Initialize profile data and avatar
-function initializeProfile() {
+                // Update user info in menu
+                const userNameElement = document.getElementById('userName');
+                const userEmailElement = document.getElementById('userEmail');
+                if (userNameElement) userNameElement.textContent = data.full_name || 'User';
+                if (userEmailElement) userEmailElement.textContent = data.email || '';
+            } else {
+                console.error('Error loading user profile:', data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            // Show default avatar on error
+            updateProfilePictures(null, 'U');
+        });
+}
+
+// Function to update all profile pictures on the page
+function updateProfilePictures(profilePicture, fullName) {
     const userAvatar = document.getElementById('userAvatar');
-    if (userAvatar) {
-        const fullName = document.getElementById('fullName').value;
-        updateAvatar(fullName);
-    }
-}
-
-// Update avatar with user's initials and color
-function updateAvatar(name) {
-    const avatar = document.getElementById('userAvatar');
-    if (avatar) {
-        const initials = generateInitials(name);
-        const color = generateAvatarColor(name);
+    const currentProfilePic = document.getElementById('currentProfilePic');
+    
+    const updateElement = (element) => {
+        if (!element) return;
         
-        avatar.style.backgroundColor = color;
-        avatar.querySelector('span').textContent = initials;
+        if (profilePicture && profilePicture.trim() !== '') {
+            // Add timestamp to prevent caching
+            const timestamp = new Date().getTime();
+            const imgSrc = `${profilePicture}?t=${timestamp}`;
+            element.innerHTML = `<img src="${imgSrc}" alt="Profile Picture">`;
+        } else {
+            const initial = (fullName || 'U')[0].toUpperCase();
+            element.innerHTML = `<span>${initial}</span>`;
+        }
+    };
+
+    updateElement(userAvatar);
+    updateElement(currentProfilePic);
+}
+
+function setupImageUpload() {
+    const fileInput = document.getElementById('profilePicture');
+    const currentProfilePic = document.getElementById('currentProfilePic');
+    
+    if (!fileInput || !currentProfilePic) {
+        console.log('Profile picture elements not found, skipping setup');
+        return;
+    }
+    
+    console.log('Setting up image upload...');
+    
+    // Make the entire profile picture area clickable
+    currentProfilePic.addEventListener('click', () => {
+        fileInput.click();
+    });
+    
+    fileInput.addEventListener('change', async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        // Validate file size (5MB max)
+        if (file.size > 5 * 1024 * 1024) {
+            alert('File size must be less than 5MB');
+            return;
+        }
+
+        // Validate file type
+        if (!file.type.startsWith('image/')) {
+            alert('Please upload an image file');
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('profile_picture', file);
+
+        try {
+            const response = await fetch('includes/upload_profile_picture.php', {
+                method: 'POST',
+                body: formData
+            });
+
+            const data = await response.json();
+            console.log('Upload response:', data);
+
+            if (data.status === 'success') {
+                // Force reload user profile data to update all instances
+                loadUserProfile();
+                alert('Profile picture updated successfully!');
+            } else {
+                alert(data.message || 'Failed to upload image');
+            }
+        } catch (error) {
+            console.error('Upload failed:', error);
+            alert('Failed to upload image. Please try again.');
+        }
+    });
+}
+
+function setupPasswordToggles() {
+    // Only setup password toggles if we're on the profile settings page
+    const currentPassword = document.getElementById('currentPassword');
+    const newPassword = document.getElementById('newPassword');
+    
+    if (currentPassword) {
+        setupPasswordToggle('currentPassword');
+    }
+    if (newPassword) {
+        setupPasswordToggle('newPassword');
     }
 }
 
-// Generate initials from name
-function generateInitials(name) {
-    return name
-        .split(' ')
-        .map(word => word[0])
-        .join('')
-        .toUpperCase()
-        .slice(0, 2);
+function setupPasswordToggle(inputId) {
+    const input = document.getElementById(inputId);
+    if (!input) return;
+    
+    const button = input.nextElementSibling;
+    if (!button) return;
+    
+    button.addEventListener('click', () => {
+        input.type = input.type === 'password' ? 'text' : 'password';
+        button.style.color = input.type === 'text' ? '#0052CC' : '#6B778C';
+    });
 }
 
-// Generate consistent color based on name
+function setupFormSubmit() {
+    const profileForm = document.getElementById('profileForm');
+    if (!profileForm) return;
+    
+    profileForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const formData = {
+            full_name: document.getElementById('fullName').value,
+            current_password: document.getElementById('currentPassword').value,
+            new_password: document.getElementById('newPassword').value || null
+        };
+
+        try {
+            const response = await fetch('includes/update_profile.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            });
+
+            const data = await response.json();
+
+            if (data.status === 'success') {
+                alert('Profile updated successfully!');
+                // Reload profile data
+                loadUserProfile();
+            } else {
+                alert(data.message || 'Failed to update profile');
+            }
+        } catch (error) {
+            console.error('Update failed:', error);
+            alert('Failed to update profile. Please try again.');
+        }
+    });
+}
+
+// Utility functions for avatar
 function generateAvatarColor(name) {
     let hash = 0;
     for (let i = 0; i < name.length; i++) {
@@ -53,75 +193,58 @@ function generateAvatarColor(name) {
     return colors[Math.abs(hash) % colors.length];
 }
 
-// Handle profile form submission
-async function handleProfileUpdate(e) {
-    e.preventDefault();
+function generateInitials(name) {
+    return name
+        .split(' ')
+        .map(word => word[0])
+        .join('')
+        .toUpperCase()
+        .slice(0, 2);
+}
+
+// Initialize profile menu functionality
+function initializeProfileMenu() {
+    console.log('Initializing profile menu...');
+    const userAvatar = document.getElementById('userAvatar');
+    const profileMenu = document.getElementById('profileMenu');
     
-    const formData = new FormData(e.target);
-    const updates = {
-        fullName: formData.get('fullName'),
-        email: formData.get('email'),
-        currentPassword: formData.get('currentPassword'),
-        newPassword: formData.get('newPassword'),
-        confirmNewPassword: formData.get('confirmNewPassword'),
-        emailNotifications: formData.get('emailNotifications') === 'on',
-        taskReminders: formData.get('taskReminders') === 'on'
-    };
-
-    // Validate password change if attempted
-    if (updates.newPassword) {
-        if (updates.newPassword !== updates.confirmNewPassword) {
-            alert('New passwords do not match!');
-            return;
-        }
-        
-        if (updates.newPassword.length < 8) {
-            alert('New password must be at least 8 characters long!');
-            return;
-        }
-        
-        if (!updates.currentPassword) {
-            alert('Please enter your current password to change it!');
-            return;
-        }
+    if (!userAvatar || !profileMenu) {
+        console.error('Profile menu elements not found:', {
+            userAvatar: !!userAvatar,
+            profileMenu: !!profileMenu
+        });
+        return;
     }
 
-    try {
-        // Here we'll add the actual API call later
-        console.log('Profile update:', updates);
-        
-        // Update the avatar if name changed
-        updateAvatar(updates.fullName);
-        
-        // Show success message
-        alert('Profile updated successfully!');
-    } catch (error) {
-        console.error('Profile update failed:', error);
-        alert('Failed to update profile. Please try again.');
-    }
+    console.log('Found profile elements, setting up event listeners...');
+
+    // Toggle menu on avatar click
+    userAvatar.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        profileMenu.classList.toggle('active');
+        console.log('Menu active state:', profileMenu.classList.contains('active'));
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!userAvatar.contains(e.target) && !profileMenu.contains(e.target)) {
+            profileMenu.classList.remove('active');
+        }
+    });
+
+    // Prevent menu from closing when clicking inside it
+    profileMenu.addEventListener('click', (e) => {
+        e.stopPropagation();
+    });
 }
 
-// Toggle password visibility functions
-function toggleCurrentPassword() {
-    togglePasswordVisibility('currentPassword', event.currentTarget);
-}
-
-function toggleNewPassword() {
-    togglePasswordVisibility('newPassword', event.currentTarget);
-}
-
-function toggleConfirmNewPassword() {
-    togglePasswordVisibility('confirmNewPassword', event.currentTarget);
-}
-
-function togglePasswordVisibility(inputId, button) {
-    const input = document.getElementById(inputId);
-    
-    if (input.type === 'password') {
-        input.type = 'text';
-        button.style.color = '#0052CC';
-    } else {
-        input.type = 'password';
-        button.style.color = '#6B778C';
-    }
-} 
+// When the DOM is loaded, initialize everything
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOM loaded, initializing profile functionality...');
+    loadUserProfile();
+    initializeProfileMenu();
+    setupPasswordToggles();
+    setupFormSubmit();
+    setupImageUpload();
+}); 

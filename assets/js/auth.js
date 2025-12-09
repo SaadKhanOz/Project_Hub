@@ -37,7 +37,23 @@ document.addEventListener('DOMContentLoaded', () => {
     if (signupForm) {
         signupForm.addEventListener('submit', handleSignup);
     }
+
+    // Check if user is already logged in
+    checkSession();
 });
+
+async function checkSession() {
+    try {
+        const response = await fetch('includes/check_session.php');
+        const data = await response.json();
+        
+        // Only store the session state, don't redirect automatically
+        window.isLoggedIn = data.logged_in && data.status === 'success';
+    } catch (error) {
+        console.error('Session check failed:', error);
+        window.isLoggedIn = false;
+    }
+}
 
 async function handleLogin(e) {
     e.preventDefault();
@@ -47,14 +63,34 @@ async function handleLogin(e) {
     const remember = document.getElementById('remember').checked;
 
     try {
-        // Here we'll add the actual API call later
-        console.log('Login attempt:', { email, password, remember });
-        
-        // For now, simulate successful login
-        window.location.href = 'home.html';
+        const response = await fetch('includes/login.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email, password })
+        });
+
+        const data = await response.json();
+
+        if (data.status === 'success') {
+            // Store remember me preference if checked
+            if (remember) {
+                localStorage.setItem('rememberMe', 'true');
+                localStorage.setItem('userEmail', email);
+            } else {
+                localStorage.removeItem('rememberMe');
+                localStorage.removeItem('userEmail');
+            }
+
+            // Only redirect after successful login
+            window.location.href = 'home.html';
+        } else {
+            alert(data.message || 'Login failed. Please try again.');
+        }
     } catch (error) {
         console.error('Login failed:', error);
-        alert('Login failed. Please check your credentials and try again.');
+        alert('Login failed. Please check your connection and try again.');
     }
 }
 
@@ -78,14 +114,29 @@ async function handleSignup(e) {
     }
 
     try {
-        // Here we'll add the actual API call later
-        console.log('Signup attempt:', { fullName, email, password });
-        
-        // For now, simulate successful signup
-        window.location.href = 'home.html';
+        const response = await fetch('includes/register.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                full_name: fullName,
+                email: email,
+                password: password
+            })
+        });
+
+        const data = await response.json();
+
+        if (data.status === 'success') {
+            alert('Registration successful! Please log in.');
+            window.location.href = 'login.html';
+        } else {
+            alert(data.message || 'Registration failed. Please try again.');
+        }
     } catch (error) {
         console.error('Signup failed:', error);
-        alert('Signup failed. Please try again.');
+        alert('Signup failed. Please check your connection and try again.');
     }
 }
 

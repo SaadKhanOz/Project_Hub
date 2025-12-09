@@ -4,54 +4,77 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile Settings - Project Management System</title>
-    <link rel="stylesheet" href="assets/css/profileSettings.css">
+    <link rel="stylesheet" href="assets/css/auth.css">
+    <link rel="stylesheet" href="assets/css/profile.css">
 </head>
 <body>
-    <div class="settings-container">
-        <div class="settings-header">
+    <div class="profile-settings-container">
+        <div class="profile-card">
             <h1>Profile Settings</h1>
-            <button onclick="history.back()" class="back-button">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="#42526E">
-                    <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
-                </svg>
-                Back
-            </button>
-        </div>
-        <div class="settings-content">
-            <div class="profile-section">
-                <div class="avatar-section">
-                    <div class="avatar" id="userAvatar"></div>
-                    <button class="change-avatar-btn">Change avatar</button>
+            
+            <div class="profile-picture-section">
+                <div class="profile-picture-container">
+                    <div id="currentProfilePic" class="profile-picture">
+                        <!-- Profile picture or initials will be displayed here -->
+                    </div>
+                    <div class="upload-overlay">
+                        <label for="profilePicture" class="upload-button">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/>
+                            </svg>
+                            Upload Photo
+                        </label>
+                        <input type="file" id="profilePicture" accept="image/*" style="display: none;">
+                    </div>
                 </div>
-                <form class="profile-form">
-                    <div class="form-group">
-                        <label for="fullName">Full Name</label>
-                        <input type="text" id="fullName" name="fullName" value="Saad Khan">
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email Address</label>
-                        <input type="email" id="email" name="email" value="saad.khan@example.com">
-                    </div>
-                    <div class="form-group">
-                        <label for="jobTitle">Job Title</label>
-                        <input type="text" id="jobTitle" name="jobTitle" placeholder="Enter your job title">
-                    </div>
-                    <div class="form-group">
-                        <label for="department">Department</label>
-                        <input type="text" id="department" name="department" placeholder="Enter your department">
-                    </div>
-                    <div class="form-group">
-                        <label for="location">Location</label>
-                        <input type="text" id="location" name="location" placeholder="Enter your location">
-                    </div>
-                    <div class="button-group">
-                        <button type="submit" class="save-button">Save changes</button>
-                        <button type="button" class="cancel-button" onclick="history.back()">Cancel</button>
-                    </div>
-                </form>
+                <p class="upload-hint">Click to upload new profile picture<br>Maximum size: 5MB</p>
             </div>
+
+            <form id="profileForm" class="profile-form">
+                <div class="form-group">
+                    <label for="fullName">Full Name</label>
+                    <input type="text" id="fullName" name="fullName" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="currentPassword">Current Password</label>
+                    <div class="password-input">
+                        <input type="password" id="currentPassword" name="currentPassword" placeholder="Enter current password to save changes">
+                        <button type="button" class="toggle-password" onclick="toggleCurrentPassword()">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                <path d="M10 4C4.5 4 2 10 2 10C2 10 4.5 16 10 16C15.5 16 18 10 18 10C18 10 15.5 4 10 4Z" stroke="currentColor" stroke-width="1.5"/>
+                                <circle cx="10" cy="10" r="3" stroke="currentColor" stroke-width="1.5"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="newPassword">New Password (Optional)</label>
+                    <div class="password-input">
+                        <input type="password" id="newPassword" name="newPassword" placeholder="Leave blank to keep current password">
+                        <button type="button" class="toggle-password" onclick="toggleNewPassword()">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                <path d="M10 4C4.5 4 2 10 2 10C2 10 4.5 16 10 16C15.5 16 18 10 18 10C18 10 15.5 4 10 4Z" stroke="currentColor" stroke-width="1.5"/>
+                                <circle cx="10" cy="10" r="3" stroke="currentColor" stroke-width="1.5"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button type="submit" class="submit-btn">Save Changes</button>
+                    <a href="home.html" class="cancel-btn">Cancel</a>
+                </div>
+            </form>
         </div>
     </div>
-    <script src="assets/js/profileSettings.js"></script>
+
+    <script src="assets/js/profile.js"></script>
 </body>
 </html>

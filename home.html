@@ -28,40 +28,35 @@
                 <div class="dropdown-content" id="projectsDropdown">
                     <a href="createProject.html">Create Project</a>
                     <a href="projects.html">View Projects</a>
-                    <a href="projectAnalytics.html">Project Analytics</a>
-                    <a href="projectSettings.html">Project Settings</a>
+                    
                 </div>
             </div>
-            <div class="dropdown">
-                <a href="team.html" class="nav-item" id="teamsLink">Teams</a>
-                <div class="dropdown-content" id="teamsDropdown">
-                    <a href="team.html">Create Team</a>
-                    <a href="team.html">View All Team members</a>
-                </div>
-            </div>
+            
             <div class="dropdown">
                 <a href="task.html" class="nav-item">Tasks</a>
                 <div class="dropdown-content" id="tasksDropdown">
                     <a href="projects.html">view projects</a>
                 </div>
             </div>
-            <a href="chat.html" class="nav-item">Chat</a>
+            <a href="projectChat.html" class="nav-item">Chat</a>
         </div>
 
-        <button class="create-button">Create</button>
+        <button class="create-button" id="createProjectBtn">Create</button>
         <div class="nav-right">
             <div class="user-profile">
-                <div id="userAvatar" class="avatar"></div>
+                <div id="userAvatar" class="avatar">
+                    <span>U</span>
+                </div>
                 <div id="profileMenu" class="profile-menu">
                     <div class="profile-header">
                         <div class="profile-info">
-                            <span id="userName"></span>
+                            <span id="userName">User</span>
                             <span id="userEmail"></span>
                         </div>
                     </div>
                     <div class="profile-links">
                         <a href="profileSettings.html" class="profile-link">Profile settings</a>
-                        <a href="#" class="profile-link logout">Log out</a>
+                        <a href="includes/logout.php" class="profile-link logout">Log out</a>
                     </div>
                 </div>
             </div>
@@ -82,85 +77,79 @@
                 <a href="projects.html" class="view-all">View all projects</a>
             </div>
             
-            <div class="project-cards">
-                <div class="project-card">
-                    <div class="project-icon beta">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="#42526E">
-                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
-                        </svg>
-                    </div>
-                    <div class="project-info">
-                        <div class="project-header">
-                            <h4>beta</h4>
-                            <span class="project-type">Team-managed software</span>
-                        </div>
-                        <div class="quick-links">
-                            <h5>Quick links</h5>
-                            <a href="#" class="work-items">My open work items <span class="count">0</span></a>
-                            <a href="#" class="done-items">Done work items</a>
-                        </div>
-                        <div class="board-info">
-                            <span>1 board</span>
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="#42526E">
-                                <path d="M7 10l5 5 5-5H7z"/>
-                            </svg>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-icon alpha">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="#42526E">
-                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
-                        </svg>
-                    </div>
-                    <div class="project-info">
-                        <div class="project-header">
-                            <h4>alpha</h4>
-                            <span class="project-type">Team-managed software</span>
-                        </div>
-                        <div class="quick-links">
-                            <h5>Quick links</h5>
-                            <a href="#" class="work-items">My open work items <span class="count">0</span></a>
-                            <a href="#" class="done-items">Done work items</a>
-                        </div>
-                        <div class="board-info">
-                            <span>1 board</span>
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="#42526E">
-                                <path d="M7 10l5 5 5-5H7z"/>
-                            </svg>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-icon scrum">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="#42526E">
-                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
-                        </svg>
-                    </div>
-                    <div class="project-info">
-                        <div class="project-header">
-                            <h4>My Scrum Project</h4>
-                            <span class="project-type">Team-managed software</span>
-                        </div>
-                        <div class="quick-links">
-                            <h5>Quick links</h5>
-                            <a href="#" class="work-items">My open work items <span class="count">0</span></a>
-                            <a href="#" class="done-items">Done work items</a>
-                        </div>
-                        <div class="board-info">
-                            <span>1 board</span>
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="#42526E">
-                                <path d="M7 10l5 5 5-5H7z"/>
-                            </svg>
-                        </div>
-                    </div>
-                </div>
+            <div class="project-cards" id="projectCards">
+                <!-- Projects will be loaded dynamically -->
             </div>
         </div>
     </div>
 
-    <script src="assets/js/home.js"></script>
+    <script src="assets/js/profile.js"></script>
+    <script>
+        // Function to load user's projects
+        function loadUserProjects() {
+            fetch('includes/get_user_projects.php')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const projectCards = document.getElementById('projectCards');
+                        projectCards.innerHTML = ''; // Clear existing cards
+                        
+                        data.projects.forEach(project => {
+                            const projectHtml = `
+                                <div class="project-card">
+                                    <div class="project-icon ${getRandomProjectClass()}">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="#42526E">
+                                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
+                                        </svg>
+                                    </div>
+                                    <div class="project-info">
+                                        <div class="project-header">
+                                            <h4>${project.name}</h4>
+                                            <span class="project-type">Team-managed software</span>
+                                        </div>
+                                        <div class="quick-links">
+                                            <h5>Quick links</h5>
+                                            <a href="#" class="work-items">My open work items <span class="count">0</span></a>
+                                            <a href="#" class="done-items">Done work items</a>
+                                        </div>
+                                        <div class="board-info">
+                                            <span>1 board</span>
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="#42526E">
+                                                <path d="M7 10l5 5 5-5H7z"/>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                            projectCards.innerHTML += projectHtml;
+                        });
+
+                        // If no projects, show a message
+                        if (data.projects.length === 0) {
+                            projectCards.innerHTML = '<p>No projects created yet. Click "Create Project" to get started!</p>';
+                        }
+                    } else {
+                        console.error('Error loading projects:', data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+
+        // Function to get random project class for icon background
+        function getRandomProjectClass() {
+            const classes = ['beta', 'alpha', 'scrum'];
+            return classes[Math.floor(Math.random() * classes.length)];
+        }
+
+        // Load projects when page loads
+        document.addEventListener('DOMContentLoaded', loadUserProjects);
+
+        // Redirect Create button to createProject.html
+        document.getElementById('createProjectBtn').addEventListener('click', function() {
+            window.location.href = 'createProject.html';
+        });
+    </script>
 </body>
 </html> 

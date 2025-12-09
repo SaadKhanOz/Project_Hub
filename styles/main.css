@@ -1,0 +1,50 @@
+.profile-picture {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.profile-button {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    color: #333;
+}
+
+.profile-button:hover {
+    background: #e9ecef;
+}
+
+.profile-button span {
+    margin-right: 8px;
+}
+
+/* Ensure the header doesn't get affected by large images */
+header {
+    position: relative;
+    z-index: 100;
+    background: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Fix any potential overflow issues */
+body {
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+/* Ensure the main content area isn't affected by the profile picture */
+.main-content {
+    position: relative;
+    z-index: 1;
+    background: #fff;
+} 
